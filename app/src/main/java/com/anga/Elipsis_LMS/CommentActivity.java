@@ -35,7 +35,7 @@ public class CommentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Comment> list;
     private CommentsAdapter adapter;
-    private int postId = 0;
+    private int bookId = 0;
     public  static  int postPosition = 0;
     private SharedPreferences preferences;
     private EditText txtAddComment;
@@ -57,7 +57,7 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         txtAddComment = findViewById(R.id.txtAddComment);
-        postId = getIntent().getIntExtra("postId",0);
+        bookId = getIntent().getIntExtra("postId",0);
         getComments();
     }
 
@@ -107,7 +107,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("id",postId+"");
+                map.put("id", bookId +"");
                 return map;
             }
         };
@@ -173,7 +173,7 @@ public class CommentActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     HashMap<String,String> map = new HashMap<>();
-                    map.put("id",postId+"");
+                    map.put("id", bookId +"");
                     map.put("comment",commentText);
                     return map;
                 }

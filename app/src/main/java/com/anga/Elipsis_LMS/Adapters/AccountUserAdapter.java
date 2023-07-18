@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -108,17 +110,22 @@ public class AccountUserAdapter extends RecyclerView.Adapter<AccountUserAdapter.
 
                     try {
                         JSONObject object = new JSONObject(response);
+                        Log.d("erorooooo",""+object);
                         if (object.getBoolean("success")){
+                            Toast.makeText(context, ""+object.getString("message"), Toast.LENGTH_SHORT).show();
                             arrayList.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
+                        }else {
+                            Toast.makeText(context, ""+object.getString("message"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
+                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
                 },error -> {
-
+                    Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -131,7 +138,7 @@ public class AccountUserAdapter extends RecyclerView.Adapter<AccountUserAdapter.
 //                    @Override
 //                    protected Map<String, String> getParams() throws AuthFailureError {
 //                        HashMap<String,String> map = new HashMap<>();
-//                        map.put("id",postId+"");
+//                        map.put("id",""+UserId);
 //                        return map;
 //                    }
                 };

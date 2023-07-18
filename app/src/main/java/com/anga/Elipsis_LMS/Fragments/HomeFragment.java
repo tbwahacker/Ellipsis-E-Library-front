@@ -3,6 +3,7 @@ package com.anga.Elipsis_LMS.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
     // creating a variable for our page and limit as 2
     // as our api is having highest limit as 2 so
     // we are setting a limit = 2
-    int page = 1, limit = 3;
+    int itemsPerPage = 5;
 
     @Nullable
     @Override
@@ -88,36 +88,26 @@ public class HomeFragment extends Fragment {
                 if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
                     // in this method we are incrementing page number,
                     // making progress bar visible and calling get data method.
-                    page++;
+//                    page++;
+                    itemsPerPage += 5;
                     loadingPB.setVisibility(View.VISIBLE);
-                    getPosts(page,limit);
+                    getPosts(itemsPerPage);
                 }
             }
         });
 
 
-        getPosts(page,limit);
+        getPosts(itemsPerPage);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getPosts(page, limit);
+                getPosts(itemsPerPage);
             }
         });
     }
 
-    private void getPosts(int page, int limit) {
-
-        if (page > limit) {
-            // checking if the page number is greater than limit.
-            // displaying toast message in this case when page>limit.
-            Toast.makeText(getContext(), "That's all the books..", Toast.LENGTH_SHORT).show();
-
-            // hiding our progress bar.
-            loadingPB.setVisibility(View.GONE);
-            return;
-        }
-
+    private void getPosts(int page) {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
@@ -125,8 +115,15 @@ public class HomeFragment extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(response);
+
+                Log.d("hapaaa1",""+object);
+                Log.d("hapaaa2",""+object.getString("data"));
+
+                JSONObject object2 = new JSONObject(object.getString("data"));
+                Log.d("hapaaa3",""+object2);
+                Log.d("hapaaa4",""+object2.getString("data"));
                 if (object.getInt("status")==200){
-                    JSONArray array = new JSONArray(object.getString("data"));
+                    JSONArray array = new JSONArray(object2.getString("data"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject bookObject = array.getJSONObject(i);
                         JSONObject userObject = bookObject.getJSONObject("user");
