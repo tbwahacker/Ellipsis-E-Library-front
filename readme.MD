@@ -1,4 +1,4 @@
-## Android E-Library App
+## Android E-Library App (Documentation)
 
 ## Instructions
 - if you are running the app with a local server,
