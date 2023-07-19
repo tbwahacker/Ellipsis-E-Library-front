@@ -188,7 +188,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.PostsHolder>
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                StringRequest request = new StringRequest(Request.Method.DELETE,Constant.DELETE_BOOK +"?id="+postId, response -> {
+                StringRequest request = new StringRequest(Request.Method.POST,Constant.DELETE_BOOK +"?id="+postId, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);

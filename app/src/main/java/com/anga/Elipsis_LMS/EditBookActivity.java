@@ -65,7 +65,7 @@ public class EditBookActivity extends AppCompatActivity {
     private void savePost() {
         dialog.setMessage("Saving");
         dialog.show();
-        StringRequest request = new StringRequest(Request.Method.PUT,Constant.UPDATE_BOOK, response -> {
+        StringRequest request = new StringRequest(Request.Method.POST,Constant.UPDATE_BOOK, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);

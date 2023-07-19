@@ -106,7 +106,7 @@ public class AccountUserAdapter extends RecyclerView.Adapter<AccountUserAdapter.
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                StringRequest request = new StringRequest(Request.Method.DELETE, Constant.DELETE_USER+"?id="+UserId, response -> {
+                StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_USER+"?id="+UserId, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
